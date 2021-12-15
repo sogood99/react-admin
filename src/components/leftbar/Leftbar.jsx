@@ -13,10 +13,12 @@ const CustomContainer = styled(Container)(({ theme }) => ({
   paddingTop: theme.spacing(12),
   backgroundColor: theme.palette.primary.main,
   height: "100vh",
+  width: theme.spacing(35),
   color: "white",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+  position: "fixed",
 }));
 
 const Item = styled(Button)(({ theme }) => ({

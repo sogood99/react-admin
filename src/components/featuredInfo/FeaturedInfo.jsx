@@ -1,3 +1,4 @@
+import { ArrowUpward } from "@mui/icons-material";
 import {
   Button,
   Card,
@@ -11,20 +12,31 @@ export default function FeaturedInfo() {
   return (
     <Card>
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Word of the Day
+        <Typography variant="h6" component="div">
+          New User Count
         </Typography>
-        <Typography variant="h5" component="div">
-          benevolent
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          adjective
-        </Typography>
-        <Typography variant="body2">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
+        <span>
+          <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            Since Last Month
+          </Typography>
+        </span>
+        <span
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+          }}
+        >
+          <Typography sx={{ fontSize: 30 }} color="text.primary" gutterBottom>
+            +{20} Users
+          </Typography>
+          <span style={{ display: "flex", alignItems: "bottom" }}>
+            <ArrowUpward color="success" />
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              +1.0%
+            </Typography>
+          </span>
+        </span>
       </CardContent>
       <CardActions>
         <Button size="small">Learn More</Button>
