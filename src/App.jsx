@@ -2,19 +2,26 @@ import { Grid } from "@mui/material";
 import Leftbar from "./components/leftbar/Leftbar";
 import Navbar from "./components/navbar/Navbar";
 import Homepage from "./pages/homepage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Userpage from "./pages/userpage";
 
 function App() {
   return (
     <div>
-      <Navbar />
-      <Grid container>
-        <Grid item sm={2}>
-          <Leftbar></Leftbar>
+      <BrowserRouter>
+        <Navbar />
+        <Grid container>
+          <Grid item sm={2}>
+            <Leftbar></Leftbar>
+          </Grid>
+          <Grid item sm={10}>
+            <Routes>
+              <Route path="/" element={<Homepage />} />
+              <Route path="/users" element={<Userpage />} />
+            </Routes>
+          </Grid>
         </Grid>
-        <Grid item sm={10}>
-          <Homepage></Homepage>
-        </Grid>
-      </Grid>
+      </BrowserRouter>
     </div>
   );
 }

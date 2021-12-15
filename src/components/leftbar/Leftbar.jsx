@@ -8,6 +8,7 @@ import {
 } from "@mui/icons-material";
 import { Button, Container, styled, Typography } from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const CustomContainer = styled(Container)(({ theme }) => ({
   paddingTop: theme.spacing(12),
@@ -33,15 +34,19 @@ const Item = styled(Button)(({ theme }) => ({
 export default function Leftbar() {
   return (
     <CustomContainer>
-      <Item size="large" startIcon={<Home />}>
-        <Typography>Homepage</Typography>
-      </Item>
+      <Link to="/">
+        <Item size="large" startIcon={<Home />}>
+          <Typography>Homepage</Typography>
+        </Item>
+      </Link>
       <Item size="large" startIcon={<TrendingUp />}>
         <Typography>Analytics</Typography>
       </Item>
-      <Item size="large" startIcon={<Person />}>
-        <Typography>Users</Typography>
-      </Item>
+      <Link to="/users">
+        <Item size="large" startIcon={<Person />}>
+          <Typography>Users</Typography>
+        </Item>
+      </Link>
       <Item size="large" startIcon={<School />}>
         <Typography>Courses</Typography>
       </Item>
