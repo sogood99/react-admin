@@ -10,64 +10,27 @@ const CustomContainer = styled(Container)(({ theme }) => ({
 
 function Userpage() {
   const rows = [
-    { id: 1, lastName: "Snow", firstName: "Jon", age: 35, activated: false },
+    { id: 1, username: "first", email: "abc", activated: false },
     {
       id: 2,
-      lastName: "Lannister",
-      firstName: "Cersei",
-      age: 42,
+      username: "Jon",
+      email: "def",
       user_icon: "https://cdn.myanimelist.net/images/characters/12/451497.jpg",
       activated: true,
     },
     {
       id: 3,
-      lastName: "Lannister",
-      firstName: "Jaime",
-      age: 45,
+      username: "Joe Mamma",
+      email: "abd",
       activated: true,
     },
-    { id: 4, lastName: "Stark", firstName: "Arya", age: 16, activated: true },
-    {
-      id: 5,
-      lastName: "Targaryen",
-      firstName: "Daenerys",
-      age: null,
-      activated: true,
-    },
-    {
-      id: 6,
-      lastName: "Melisandre",
-      firstName: null,
-      age: 150,
-      activated: false,
-    },
-    {
-      id: 7,
-      lastName: "Clifford",
-      firstName: "Ferrara",
-      age: 44,
-      activated: false,
-    },
-    {
-      id: 8,
-      lastName: "Frances",
-      firstName: "Rossini",
-      age: 36,
-      activated: true,
-    },
-    { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65, activated: true },
   ];
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      width: 90,
-    },
-    {
       field: "account",
       headerName: "Account",
+      headerAlign: "center",
       width: 160,
       renderCell: (params) => {
         var user_icon_element, user_icon_url;
@@ -99,10 +62,14 @@ function Userpage() {
         return (
           <div
             className="account"
-            style={{ display: "flex", alignItems: "center" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              width: "100%",
+            }}
           >
             {user_icon_element}
-            {params.row.firstName}
+            {params.row.username}
           </div>
         );
       },
@@ -110,21 +77,24 @@ function Userpage() {
     {
       field: "activated",
       headerName: "Account Active",
-      width: 150,
+      headerAlign: "center",
+      width: 200,
       renderCell: (params) => {
         if (params.value) {
-          return <Check />;
+          return <Check style={{ width: "100%" }} />;
         } else {
-          return <Close />;
+          return <Close style={{ width: "100%" }} />;
         }
       },
     },
     {
       field: "action",
-      headerName: "Action",
+      headerName: "Actions",
+      headerAlign: "center",
       sortable: false,
+      width: 200,
       renderCell: (params) => {
-        const onClick = (e) => {
+        const jsonDetail = (e) => {
           e.stopPropagation();
 
           const api = params.api;
@@ -140,7 +110,33 @@ function Userpage() {
           return alert(JSON.stringify(thisRow, null, 4));
         };
 
-        return <Button onClick={onClick}>Click</Button>;
+        const activateUser = (params) => {
+          params.row.activated = true;
+          params.api.forceUpdate();
+        };
+
+        return (
+          <>
+            <Button
+              onClick={jsonDetail}
+              variant="outlined"
+              style={{ marginRight: "10px" }}
+            >
+              JSON
+            </Button>
+            {params.row.activated ? null : (
+              <Button
+                variant="outlined"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  activateUser(params);
+                }}
+              >
+                Activate
+              </Button>
+            )}
+          </>
+        );
       },
     },
   ];
@@ -150,6 +146,7 @@ function Userpage() {
         Users
       </Typography>
       <DataGrid
+        id="datagrid"
         rows={rows}
         columns={columns}
         pageSize={5}
