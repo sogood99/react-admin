@@ -1,7 +1,8 @@
 import { AccountBox, Check, Close } from "@mui/icons-material";
 import { styled, Container, Typography, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const CustomContainer = styled(Container)(({ theme }) => ({
@@ -10,22 +11,12 @@ const CustomContainer = styled(Container)(({ theme }) => ({
 }));
 
 function Userpage() {
-  const rows = [
-    { id: 1, username: "first", email: "abc", activated: false },
-    {
-      id: 2,
-      username: "Jon",
-      email: "def",
-      user_icon: "https://cdn.myanimelist.net/images/characters/12/451497.jpg",
-      activated: true,
-    },
-    {
-      id: 3,
-      username: "Joe Mamma",
-      email: "abd",
-      activated: true,
-    },
-  ];
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/admin/get_users").then((res) => {
+      setData(res.data.users);
+    });
+  }, []);
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     {
@@ -152,7 +143,7 @@ function Userpage() {
       </Typography>
       <DataGrid
         id="datagrid"
-        rows={rows}
+        rows={data}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
