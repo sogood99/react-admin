@@ -2,6 +2,7 @@ import { styled, Container, Grid } from "@mui/material";
 import React from "react";
 import UserChangePlot from "../components/userChangePlot/UserchangePlot";
 import UserChange from "../components/userchange/Userchange";
+import Timeonline from "../components/timeOnline/Timeonline";
 
 const CustomContainer = styled(Container)(({ theme }) => ({
   paddingTop: theme.spacing(12),
@@ -20,14 +21,8 @@ function Homepage() {
           <UserChange></UserChange>
         </Grid>
         <Grid item sm={4}>
-          <UserChange></UserChange>
+          <Timeonline />
         </Grid>
-        <Grid item sm={4}>
-          <UserChange></UserChange>
-        </Grid>
-      </CustomGrid>
-      <CustomGrid>
-        <UserChangePlot />
       </CustomGrid>
       <CustomGrid>
         <UserChangePlot />

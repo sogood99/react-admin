@@ -32,14 +32,32 @@ export default function UserChangePlot() {
   return (
     <CustomCard style={{ width: "100%" }}>
       <Typography variant="h6" component="div" style={{ marginBottom: "20px" }}>
-        User Analytics
+        User Analytics: User Change
       </Typography>
       <ResponsiveContainer width="100%" aspect={4 / 1}>
         <LineChart data={data}>
           <XAxis dataKey="month" />
           <YAxis dataKey="change" />
           <Line type="monotone" dataKey="change" />
-          <Tooltip></Tooltip>
+          <Tooltip
+            labelFormatter={(l) => {
+              const months = [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December",
+              ];
+              return months[l];
+            }}
+          ></Tooltip>
         </LineChart>
       </ResponsiveContainer>
     </CustomCard>
