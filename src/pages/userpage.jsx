@@ -2,6 +2,7 @@ import { AccountBox, Check, Close } from "@mui/icons-material";
 import { styled, Container, Typography, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const CustomContainer = styled(Container)(({ theme }) => ({
   paddingTop: theme.spacing(12),
@@ -92,7 +93,7 @@ function Userpage() {
       headerName: "Actions",
       headerAlign: "center",
       sortable: false,
-      width: 200,
+      width: 300,
       renderCell: (params) => {
         const jsonDetail = (e) => {
           e.stopPropagation();
@@ -117,6 +118,9 @@ function Userpage() {
 
         return (
           <>
+            <Link to={"/user/" + params.row.id} style={{ marginRight: "10px" }}>
+              <Button variant="outlined">Details</Button>
+            </Link>
             <Button
               onClick={jsonDetail}
               variant="outlined"
@@ -131,6 +135,7 @@ function Userpage() {
                   e.stopPropagation();
                   activateUser(params);
                 }}
+                color="success"
               >
                 Activate
               </Button>
