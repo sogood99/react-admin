@@ -14,17 +14,17 @@ export default function Userinfo() {
 
   useEffect(() => {
     axios
-      .post("http://localhost:5000/api/admin")
+      .post("http://localhost:5000/api/admin/user", { id: uid })
       .then((res) => {
-        setLoadJsx(<div>Loaded</div>);
+        const userData = res.data.user;
+        setLoadJsx(
+          <div>
+            Id: {userData.id}, Username : {userData.username}
+          </div>
+        );
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [uid]);
 
-  return (
-    <CustomContainer>
-      {uid}
-      {loadjsx}
-    </CustomContainer>
-  );
+  return <CustomContainer>{loadjsx}</CustomContainer>;
 }

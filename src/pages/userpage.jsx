@@ -103,8 +103,16 @@ function Userpage() {
         };
 
         const activateUser = (params) => {
-          params.row.activated = true;
-          params.api.forceUpdate();
+          axios
+            .post("http://localhost:5000/api/admin/activate_user", {
+              id: params.row.id,
+            })
+            .then((res) => {
+              if (res.data.state === "found") {
+                params.row.activated = true;
+                params.api.forceUpdate();
+              }
+            });
         };
 
         return (
