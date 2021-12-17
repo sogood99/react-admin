@@ -39,9 +39,11 @@ export default function Leftbar() {
           <Typography>Homepage</Typography>
         </Item>
       </Link>
-      <Item size="large" startIcon={<TrendingUp />}>
-        <Typography>Analytics</Typography>
-      </Item>
+      <Link to="/analytics" style={{ width: "100%" }}>
+        <Item size="large" startIcon={<TrendingUp />}>
+          <Typography>Analytics</Typography>
+        </Item>
+      </Link>
       <Link to="/users" style={{ width: "100%" }}>
         <Item size="large" startIcon={<Person />}>
           <Typography>Users</Typography>

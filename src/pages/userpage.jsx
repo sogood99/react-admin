@@ -1,5 +1,14 @@
 import { AccountBox, Check, Close } from "@mui/icons-material";
-import { styled, Container, Typography, Button } from "@mui/material";
+import {
+  styled,
+  Container,
+  Typography,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
+} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -9,6 +18,95 @@ const CustomContainer = styled(Container)(({ theme }) => ({
   paddingTop: theme.spacing(12),
   height: theme.spacing(75),
 }));
+
+function ActionInit(params) {
+  const [open, setOpen] = useState(false);
+
+  const handleDialogClose = () => {
+    setOpen(false);
+  };
+
+  const jsonDetail = (e) => {
+    e.stopPropagation();
+
+    const api = params.api;
+    const thisRow = {};
+
+    api
+      .getAllColumns()
+      .filter((c) => c.field !== "__check__" && !!c)
+      .forEach((c) => (thisRow[c.field] = params.getValue(params.id, c.field)));
+
+    return alert(JSON.stringify(thisRow, null, 4));
+  };
+
+  const activateUser = () => {
+    axios
+      .post("http://localhost:5000/api/admin/activate_user", {
+        id: params.row.id,
+      })
+      .then((res) => {
+        if (res.data.state === "found") {
+          params.row.activated = true;
+          params.api.forceUpdate();
+        }
+      });
+  };
+
+  return (
+    <>
+      <Dialog open={open} onClose={handleDialogClose}>
+        <DialogTitle>Activate User</DialogTitle>
+        <DialogContent>
+          Would You Like to Activate User "{params.row.username}"?
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setOpen(false);
+            }}
+            variant="outlined"
+            color="error"
+          >
+            No
+          </Button>
+          <Button
+            onClick={() => {
+              setOpen(false);
+              activateUser();
+            }}
+            variant="outlined"
+            color="success"
+          >
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Link to={"/user/" + params.row.id} style={{ marginRight: "10px" }}>
+        <Button variant="outlined">Details</Button>
+      </Link>
+      <Button
+        onClick={jsonDetail}
+        variant="outlined"
+        style={{ marginRight: "10px" }}
+      >
+        JSON
+      </Button>
+      {params.row.activated ? null : (
+        <Button
+          variant="outlined"
+          onClick={(e) => {
+            e.stopPropagation();
+            setOpen(true);
+          }}
+          color="success"
+        >
+          Activate
+        </Button>
+      )}
+    </>
+  );
+}
 
 function Userpage() {
   const [data, setData] = useState([]);
@@ -85,63 +183,7 @@ function Userpage() {
       headerAlign: "center",
       sortable: false,
       width: 300,
-      renderCell: (params) => {
-        const jsonDetail = (e) => {
-          e.stopPropagation();
-
-          const api = params.api;
-          const thisRow = {};
-
-          api
-            .getAllColumns()
-            .filter((c) => c.field !== "__check__" && !!c)
-            .forEach(
-              (c) => (thisRow[c.field] = params.getValue(params.id, c.field))
-            );
-
-          return alert(JSON.stringify(thisRow, null, 4));
-        };
-
-        const activateUser = (params) => {
-          axios
-            .post("http://localhost:5000/api/admin/activate_user", {
-              id: params.row.id,
-            })
-            .then((res) => {
-              if (res.data.state === "found") {
-                params.row.activated = true;
-                params.api.forceUpdate();
-              }
-            });
-        };
-
-        return (
-          <>
-            <Link to={"/user/" + params.row.id} style={{ marginRight: "10px" }}>
-              <Button variant="outlined">Details</Button>
-            </Link>
-            <Button
-              onClick={jsonDetail}
-              variant="outlined"
-              style={{ marginRight: "10px" }}
-            >
-              JSON
-            </Button>
-            {params.row.activated ? null : (
-              <Button
-                variant="outlined"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  activateUser(params);
-                }}
-                color="success"
-              >
-                Activate
-              </Button>
-            )}
-          </>
-        );
-      },
+      renderCell: ActionInit,
     },
   ];
   return (
