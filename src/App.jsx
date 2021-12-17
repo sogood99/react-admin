@@ -4,6 +4,7 @@ import Navbar from "./components/navbar/Navbar";
 import Homepage from "./pages/homepage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Userpage from "./pages/userpage";
+import Coursepage from "./pages/coursepage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Homepage />} />
               <Route path="/users" element={<Userpage />} />
+              <Route path="/courses" element={<Coursepage />} />
             </Routes>
           </Grid>
         </Grid>

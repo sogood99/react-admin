@@ -47,9 +47,11 @@ export default function Leftbar() {
           <Typography>Users</Typography>
         </Item>
       </Link>
-      <Item size="large" startIcon={<School />}>
-        <Typography>Courses</Typography>
-      </Item>
+      <Link to="/courses" style={{ width: "100%" }}>
+        <Item size="large" startIcon={<School />}>
+          <Typography>Courses</Typography>
+        </Item>
+      </Link>
       <Item size="large" startIcon={<Restaurant />}>
         <Typography>Food</Typography>
       </Item>
