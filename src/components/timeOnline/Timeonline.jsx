@@ -49,14 +49,17 @@ export default class Timeonline extends Component {
               justifyContent: "space-evenly",
             }}
           >
+            <Typography sx={{ fontSize: 26 }} color="text.primary" gutterBottom>
+              {Math.floor(count / 3600 / 60)} Days
+            </Typography>
             <Typography sx={{ fontSize: 24 }} color="text.primary" gutterBottom>
-              {Math.floor(count / 3600)} Days
+              {Math.floor((count / 3600) % 60)} Hr
             </Typography>
             <Typography sx={{ fontSize: 20 }} gutterBottom>
-              {Math.floor((count / 60) % 60)} Minutes
+              {Math.floor((count / 60) % 60)} Min
             </Typography>
             <Typography sx={{ fontSize: 16 }} gutterBottom>
-              {Math.floor(count % 60)} Seconds
+              {Math.floor(count % 60)} s
             </Typography>
           </div>
         </CardContent>
