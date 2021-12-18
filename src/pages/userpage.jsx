@@ -195,9 +195,10 @@ function Userpage() {
         id="datagrid"
         rows={data}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
+        pageSize={8}
+        rowsPerPageOptions={[8]}
         checkboxSelection
+        autoHeight={true}
       />
     </CustomContainer>
   );
