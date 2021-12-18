@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CircularProgress, Container, styled, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import "../config";
 
 const CustomContainer = styled(Container)(({ theme }) => ({
   paddingTop: theme.spacing(12),
@@ -30,7 +31,7 @@ export default function Userinfo() {
 
   useEffect(() => {
     axios
-      .post("http://localhost:5000/api/admin/user", { id: uid })
+      .post(global.config.backendUrl + "/api/admin/user", { id: uid })
       .then((res) => {
         setUserData(res.data.user);
       })
