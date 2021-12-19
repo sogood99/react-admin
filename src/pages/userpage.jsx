@@ -120,7 +120,6 @@ function Userpage() {
       })
       .then((res) => {
         setData(res.data.users);
-        console.log(res.data);
       });
   }, []);
   const columns = [
