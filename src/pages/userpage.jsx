@@ -112,9 +112,13 @@ function ActionInit(params) {
 function Userpage() {
   const [data, setData] = useState([]);
   useEffect(() => {
-    axios.get(global.config.backendUrl + "/api/admin/get_users").then((res) => {
-      setData(res.data.users);
-    });
+    axios
+      .post(global.config.backendUrl + "/api/admin/get_users", {
+        secretCode: localStorage.getItem("secretCode"),
+      })
+      .then((res) => {
+        setData(res.data.users);
+      });
   }, []);
   const columns = [
     { field: "id", headerName: "ID", width: 70 },

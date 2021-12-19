@@ -16,7 +16,9 @@ export default function UserChange() {
   const [percent, setpercent] = useState(0);
   useEffect(() => {
     axios
-      .get(global.config.backendUrl + "/api/admin/get_user_change")
+      .post(global.config.backendUrl + "/api/admin/get_user_change", {
+        secretCode: localStorage.getItem("secretCode"),
+      })
       .then((res) => {
         setcount(res.data.change);
         setpercent(res.data.percent);

@@ -39,7 +39,10 @@ export default function Userinfo() {
 
   useEffect(() => {
     axios
-      .post(global.config.backendUrl + "/api/admin/user", { id: uid })
+      .post(global.config.backendUrl + "/api/admin/user", {
+        secretCode: localStorage.getItem("secretCode"),
+        id: uid,
+      })
       .then((res) => {
         setUserData(res.data.user);
       })
