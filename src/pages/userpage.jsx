@@ -113,18 +113,21 @@ function Userpage() {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .post(global.config.backendUrl + "/api/admin/get_users", {
-        secretCode: localStorage.getItem("secretCode"),
+      .post(global.config.backendUrl + "/api/v1.0/admin_get_users", {
+        secret_code: localStorage.getItem("secretCode"),
+        offset: 0,
+        size: 1000,
       })
       .then((res) => {
         setData(res.data.users);
+        console.log(res.data);
       });
   }, []);
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     {
-      field: "account",
-      headerName: "Account",
+      field: "user_name",
+      headerName: "Username",
       headerAlign: "center",
       width: 160,
       renderCell: (params) => {
@@ -164,7 +167,7 @@ function Userpage() {
             }}
           >
             {user_icon_element}
-            {params.row.username}
+            {params.row.user_name}
           </div>
         );
       },

@@ -13,34 +13,25 @@ function Coursepage() {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .post(global.config.backendUrl + "/api/admin/get_course_list", {
-        secretCode: localStorage.getItem("secretCode"),
+      .post(global.config.backendUrl + "/api/v1.0/admin_get_item_list", {
+        secret_code: localStorage.getItem("secretCode"),
+        class: 3,
+        order: 0,
+        offset: 0,
+        size: 1000,
       })
       .then((res) => {
-        setData(res.data.courseList);
+        console.log(res);
+        setData(res.data.items);
       });
   }, []);
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     {
-      field: "activated",
-      headerName: "Account Active",
+      field: "name",
+      headerName: "Course Name",
       headerAlign: "center",
       width: 200,
-      renderCell: (params) => {
-        if (params.value) {
-          return <Check style={{ width: "100%" }} />;
-        } else {
-          return <Close style={{ width: "100%" }} />;
-        }
-      },
-    },
-    {
-      field: "action",
-      headerName: "Actions",
-      headerAlign: "center",
-      sortable: false,
-      width: 300,
     },
   ];
   return (

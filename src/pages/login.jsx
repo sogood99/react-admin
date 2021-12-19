@@ -20,13 +20,14 @@ export default function Login() {
   const [open, setOpen] = useState(false); // info tag
   const HandleLogin = () => {
     axios
-      .post(global.config.backendUrl + "/api/admin/admin_login", {
-        username: username,
+      .post(global.config.backendUrl + "/api/v1.0/admin_login", {
+        user_name: username,
         password: password,
       })
       .then((res) => {
-        if (res.data.state === 0) {
-          localStorage.setItem("secretCode", res.data.secretCode);
+        console.log(res);
+        if (res.data.status === 0) {
+          localStorage.setItem("secretCode", res.data.secret_code);
           navigate("/");
         } else {
           setOpen(true);
