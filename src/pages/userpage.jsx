@@ -18,6 +18,7 @@ import "../config";
 const CustomContainer = styled(Container)(({ theme }) => ({
   paddingTop: theme.spacing(12),
   height: theme.spacing(75),
+  width: "100%",
 }));
 
 function ActionInit(params) {
@@ -43,11 +44,13 @@ function ActionInit(params) {
 
   const activateUser = () => {
     axios
-      .post(global.config.backendUrl + "/api/admin/activate_user", {
+      .post(global.config.backendUrl + "/api/v1.0/activate_user", {
+        secret_code: localStorage.getItem("secretCode"),
         id: params.row.id,
       })
       .then((res) => {
-        if (res.data.state === "found") {
+        console.log(res);
+        if (res.data.state === 0) {
           params.row.activated = true;
           params.api.forceUpdate();
         }
@@ -59,7 +62,7 @@ function ActionInit(params) {
       <Dialog open={open} onClose={handleDialogClose}>
         <DialogTitle>Activate User</DialogTitle>
         <DialogContent>
-          Would You Like to Activate User "{params.row.username}"?
+          Would You Like to Activate User "{params.row.user_name}"?
         </DialogContent>
         <DialogActions>
           <Button
@@ -119,7 +122,7 @@ function Userpage() {
         size: 1000,
       })
       .then((res) => {
-        setData(res.data.users);
+        setData(res.data.users.sort((a, b) => a.id - b.id));
       });
   }, []);
   const columns = [
@@ -130,8 +133,9 @@ function Userpage() {
       headerAlign: "center",
       width: 160,
       renderCell: (params) => {
-        var user_icon_element, user_icon_url;
-        if ((user_icon_url = params.row.user_icon)) {
+        var user_icon_element,
+          user_icon_url = params.row.user_icon;
+        if (user_icon_url) {
           user_icon_element = (
             <img
               src={user_icon_url}
@@ -172,10 +176,56 @@ function Userpage() {
       },
     },
     {
+      field: "email",
+      headerName: "Email",
+      headerAlign: "center",
+      align: "center",
+      width: 125,
+    },
+    {
+      field: "account_birth",
+      headerName: "Account Birth",
+      headerAlign: "center",
+      align: "center",
+      type: "date",
+      width: 125,
+      valueFormatter: (params) => {
+        return new Date(params.value).toLocaleDateString("zh-Hans-CN");
+      },
+    },
+    {
+      field: "collection_count",
+      headerName: "Collection Count",
+      headerAlign: "center",
+      align: "center",
+      width: 100,
+    },
+    {
+      field: "like_count",
+      headerName: "Like Count",
+      headerAlign: "center",
+      align: "center",
+      width: 100,
+    },
+    {
+      field: "comment_count",
+      headerName: "Comment Count",
+      headerAlign: "center",
+      align: "center",
+      width: 100,
+    },
+    {
+      field: "item_count",
+      headerName: "Item Count",
+      headerAlign: "center",
+      align: "center",
+      width: 100,
+    },
+    {
       field: "activated",
       headerName: "Account Active",
       headerAlign: "center",
-      width: 200,
+      width: 125,
       renderCell: (params) => {
         if (params.value) {
           return <Check style={{ width: "100%" }} />;
@@ -206,6 +256,7 @@ function Userpage() {
         rowsPerPageOptions={[8]}
         checkboxSelection
         autoHeight={true}
+        style={{ width: "100%" }}
       />
     </CustomContainer>
   );
