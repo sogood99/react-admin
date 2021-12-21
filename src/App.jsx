@@ -9,6 +9,7 @@ import Userinfo from "./pages/userinfo";
 import Analytics from "./pages/analytics";
 import Login from "./pages/login";
 import RequireAuth from "./pages/requireAuth";
+import Courseinfo from "./pages/courseinfo";
 
 function App() {
   return (
@@ -29,8 +30,9 @@ function App() {
                     <Routes>
                       <Route path="/" element={<Homepage />} />
                       <Route path="/users" element={<Userpage />} />
-                      <Route path="/courses" element={<Coursepage />} />
                       <Route path="/user/:uid" element={<Userinfo />} />
+                      <Route path="/courses" element={<Coursepage />} />
+                      <Route path="/course/:id" element={<Courseinfo />} />
                       <Route path="/analytics" element={<Analytics />} />
                     </Routes>
                   </Grid>
