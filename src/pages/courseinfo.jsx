@@ -78,7 +78,7 @@ export default function Courseinfo() {
             InputProps={{
               readOnly: true,
             }}
-            label="User Id"
+            label="Id"
             variant="standard"
             value={data.id}
           />
@@ -92,14 +92,54 @@ export default function Courseinfo() {
             }}
           />
         </div>
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div>
           <TextField
             required
             label="Teacher"
             variant="standard"
-            value={data.email}
+            value={data.teacher}
             onChange={(e) => {
               setData((prev) => ({ ...prev, teacher: e.target.value }));
+            }}
+          />
+          <TextField
+            required
+            label="Department"
+            variant="standard"
+            value={data.department}
+            onChange={(e) => {
+              setData((prev) => ({ ...prev, department: e.target.value }));
+            }}
+          />
+        </div>
+        <div>
+          <TextField
+            required
+            label="Type"
+            variant="standard"
+            value={data.type}
+            onChange={(e) => {
+              setData((prev) => ({ ...prev, type: e.target.value }));
+            }}
+          />
+          <TextField
+            required
+            label="Credit"
+            variant="standard"
+            value={data.credit}
+            onChange={(e) => {
+              setData((prev) => ({ ...prev, credit: e.target.value }));
+            }}
+          />
+        </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <TextField
+            required
+            label="Time"
+            variant="standard"
+            value={data.time}
+            onChange={(e) => {
+              setData((prev) => ({ ...prev, time: e.target.value }));
             }}
           />
           <FormGroup>
@@ -128,6 +168,7 @@ export default function Courseinfo() {
               axios
                 .post(global.config.backendUrl + "/api/v1.0/edit_item", {
                   secret_code: localStorage.getItem("secretCode"),
+                  class: 1,
                   item: data,
                 })
                 .then((res) => {
@@ -164,7 +205,7 @@ export default function Courseinfo() {
             color="primary"
             fullWidth
             onClick={() => {
-              navigate("/users");
+              navigate("/courses");
             }}
           >
             Back
